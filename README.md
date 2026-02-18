@@ -10,7 +10,30 @@ Full-stack Personal Project (Flutter + Firebase + Cloud Functions + Gemini)
 
 ## Demo / Screenshots
 - Demo video: 
-- Screenshots: 
+<table>
+  <tr>
+    <td align="center">
+      <video src="https://github.com/user-attachments/assets/a916dcc7-1960-43d9-9361-cb5a5dbbbaef"
+             width="420"
+             controls
+             muted
+             playsinline>
+      </video>
+    </td>
+    <td align="center">
+      <video src="https://github.com/user-attachments/assets/25187bf4-dc8d-4f33-9ee8-c6d8403aeca6"
+             width="420"
+             controls
+             muted
+             playsinline>
+      </video>
+    </td>
+  </tr>
+</table>
+
+- Screenshots:
+<img width="756" height="528" alt="Screenshot 2026-02-18 at 10 12 23 PM" src="https://github.com/user-attachments/assets/cc2788e6-cace-4e19-819e-80d47b7fc95c" />
+
 
 ---
 
@@ -333,3 +356,15 @@ firebase deploy --only functions
 
 ## Author
 Full-stack Flutter + Firebase AI-integrated application designed and implemented independently.
+
+---
+
+## Assets & Credits
+
+This project uses publicly available free assets:
+
+- Icons: https://iconsvg.xyz/  
+- Animations: https://lottiefiles.com/
+
+All assets are used under their respective licenses.
+If required, attribution is provided according to each asset’s license terms.
