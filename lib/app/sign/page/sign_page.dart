@@ -18,6 +18,7 @@ import 'package:unsaid_app/core/util/failure.dart';
 import 'package:unsaid_app/core/util/firebase.dart';
 import 'package:unsaid_app/core/widget/body.dart';
 import 'package:unsaid_app/core/widget/scaffold.dart';
+import 'package:unsaid_app/core/widget/text.dart';
 import 'package:unsaid_app/core/widget/toast.dart';
 
 class SignPage extends StatefulWidget {
@@ -140,10 +141,24 @@ class _SignPageState extends State<SignPage> {
           top: true,
           physics: NeverScrollableScrollPhysics(),
           children: [
-            // CustomImageAsset(
-            //   margin: EdgeInsets.only(top: 180, left: 26, right: 26),
-            //   name: 'snapfy',
-            // ),
+            Center(
+              child: MediumText(
+                margin: EdgeInsets.only(top: 160, left: 24, right: 24),
+                title: 'UNSAID',
+                fontSize: 40,
+                color: CustomColor.primary,
+                spacing: 16.0,
+              ),
+            ),
+            Center(
+              child: MediumText(
+                margin: EdgeInsets.only(top: 18, left: 24, right: 24),
+                title: 'What no one says',
+                fontSize: 18,
+                color: CustomColor.gray040,
+                spacing: 3.0,
+              ),
+            ),
           ],
           sliverFillRemaining: Column(
             mainAxisAlignment: MainAxisAlignment.end,
