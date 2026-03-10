@@ -5,6 +5,7 @@ import 'package:unsaid_app/core/user/model/user_model.dart';
 import 'package:unsaid_app/core/user/repository/user_repository.dart';
 import 'package:unsaid_app/core/util/common.dart';
 import 'package:unsaid_app/core/util/failure.dart';
+import 'package:unsaid_app/core/util/firebase.dart';
 import 'package:unsaid_app/core/util/log.dart';
 import 'package:unsaid_app/core/widget/shimmer.dart';
 

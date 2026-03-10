@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:unsaid_app/core/util/common.dart';
 import 'package:unsaid_app/core/widget/toast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,7 +16,7 @@ void copyText({
 
     customToast(title);
   } catch (e) {
-    errorToast(e);
+    errorToast(context, e);
   }
 }
 
@@ -31,7 +32,7 @@ void customLaunchUrl({
       mode: launchMode ?? LaunchMode.platformDefault,
     );
   } catch (e) {
-    errorToast(e);
+    errorToast(context, e);
   }
 }
 

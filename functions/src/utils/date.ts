@@ -1,3 +1,10 @@
+export function utcYmd(d = new Date()): string {
+  const y = d.getUTCFullYear();
+  const m = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(d.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 // YYYY-MM-DD
 export function isIsoYmd(s: string) {
   return /^\d{4}-\d{2}-\d{2}$/.test(s);

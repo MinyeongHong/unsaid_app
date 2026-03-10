@@ -53,10 +53,11 @@ class _SignAgreePageState extends State<SignAgreePage> {
       );
 
       addRoute(
+        context: context,
         page: SignBirthPage(),
       );
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {
@@ -143,8 +144,9 @@ class _SignAgreePageState extends State<SignAgreePage> {
                 analyticsLogEvent('sign_agree_click_view_privacy');
 
                 addRoute(
+                  context: context,
                   page: WebViewPage(
-                    title: 'privacyPolicy',
+                    title: 'Privacy Policy',
                     url: privacyTermsUrl,
                   ),
                 );
@@ -170,8 +172,9 @@ class _SignAgreePageState extends State<SignAgreePage> {
                 analyticsLogEvent('sign_agree_click_view_service');
 
                 addRoute(
+                  context: context,
                   page: WebViewPage(
-                    title: 'termsOfService',
+                    title: 'Terms Of Service',
                     url: serviceTermsUrl,
                   ),
                 );

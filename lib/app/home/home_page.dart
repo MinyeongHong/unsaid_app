@@ -9,6 +9,7 @@ import 'package:unsaid_app/core/route/model/route_model.dart';
 import 'package:unsaid_app/core/util/analytics.dart';
 import 'package:unsaid_app/core/util/color.dart';
 import 'package:unsaid_app/core/util/common.dart';
+import 'package:unsaid_app/core/util/failure.dart';
 import 'package:unsaid_app/core/util/size.dart';
 import 'package:unsaid_app/core/widget/animation.dart';
 import 'package:unsaid_app/core/widget/body.dart';
@@ -27,6 +28,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int? _remaining; // null = 아직 모름(서버에서 quota를 안 내려줬거나 최초)
+
   bool _isQuestion = false;
   bool _isLoading = false;
 
@@ -35,6 +38,8 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _questionController = TextEditingController();
   final FocusNode _questionFocusNode = FocusNode();
 
+  bool get _quotaBlocked => (_remaining != null && _remaining! <= 0);
+  bool get _canSubmit => _isActive && !_isLoading && !_quotaBlocked;
   bool get _isActive => _question.isNotEmpty;
 
   @override
@@ -62,6 +67,9 @@ class _HomePageState extends State<HomePage> {
   void _addReading() async {
     if (!_isActive) return;
     if (_isLoading) return;
+    if (_quotaBlocked) {
+      return errorToast(context, 'Today’s limit reached. Try again tomorrow.');
+    }
 
     try {
       analyticsLogEvent('home_click_continue');
@@ -80,12 +88,22 @@ class _HomePageState extends State<HomePage> {
 
       addRoute(
         fullscreenDialog: true,
+        context: context,
         page: ReadingDetailPage(
           reading: reading,
         ),
       );
     } catch (e) {
-      errorToast(e);
+      // TODO fix
+      if (e is Failure && e.message == 'quota_exceeded') {
+        setState(() {
+          _remaining = 0;
+        });
+
+        errorToast(context, 'Today’s limit reached. Try again tomorrow.');
+      } else {
+        errorToast(context, e);
+      }
     } finally {
       if (mounted) {
         setState(() {
@@ -127,6 +145,7 @@ class _HomePageState extends State<HomePage> {
                     analyticsLogEvent('home_click_setting');
 
                     addRoute(
+                      context: context,
                       page: UserSettingPage(),
                     );
                   },
@@ -229,13 +248,24 @@ class _HomePageState extends State<HomePage> {
                               textAlign: TextAlign.center,
                             ),
                           _isQuestion
-                              ? CustomButton(
-                                  onTap: () {
-                                    _addReading();
-                                  },
-                                  margin: EdgeInsets.only(top: 24, left: 48, right: 48),
-                                  title: 'Continue',
-                                  isActive: _isActive,
+                              ? Column(
+                                  children: [
+                                    CustomButton(
+                                      onTap: () {
+                                        _addReading();
+                                      },
+                                      margin: EdgeInsets.only(top: 24, left: 48, right: 48),
+                                      title: _quotaBlocked ? 'Come back tomorrow' : 'Continue',
+                                      isActive: _canSubmit,
+                                    ),
+                                    NormalText(
+                                      margin: EdgeInsets.only(top: 12),
+                                      title: 'you can ask 3 times a day',
+                                      fontSize: 12,
+                                      color: CustomColor.gray040,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
                                 )
                               : CustomButton(
                                   onTap: () {

@@ -71,6 +71,12 @@ class ReadingRepositoryImpl implements ReadingRepository {
 
       return Right(reading);
     } catch (e) {
+      final int? status = (e is Map) ? e['status'] as int? : null;
+
+      if (status == 429) {
+        return Left(Failure('quota_exceeded', e));
+      }
+
       return Left(Failure('addReading', e));
     }
   }

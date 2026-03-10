@@ -49,7 +49,7 @@ class _ReadingDetailPageState extends State<ReadingDetailPage> {
 
       Navigator.of(context).pop();
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {

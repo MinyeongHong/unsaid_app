@@ -35,14 +35,24 @@ geminiRouter.post("/gemini", requireAuth, async (req: any, res: any) => {
         question: prompt.trim(),
         interpretation: r.interpretation,
         unsaidLine: r.unsaid_line,
+        limitPerDay: 3,
       });
-  
-      return res.status(201).json({ data: { ...reading } });
+
+      const { quota, ...readingOnly } = reading;
+
+      return res.status(201).json({
+        data: readingOnly,
+        quota, 
+      });
     } catch (e: any) {
       const status = e?.status || 500;
 
       return res.status(status).json({
-        error: { message: e?.message || "Failed", meta: e?.meta || null },
+        error: {
+          code: e?.code || null,
+          message: e?.message || "Failed",
+          meta: e?.meta || null,
+        },
       });
 
     }

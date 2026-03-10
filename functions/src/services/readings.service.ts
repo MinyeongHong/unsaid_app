@@ -1,5 +1,6 @@
 import { FieldPath, Timestamp } from "firebase-admin/firestore";
 import { db, FieldValue } from "../config/firebase";
+import { utcYmd } from "../utils/date";
 
 type ReadingFullDoc = {
   id: string;
@@ -70,10 +71,17 @@ export async function createReading(params: {
   question: string;
   interpretation: string;
   unsaidLine: string;
+  limitPerDay?: number;
+
 }) {
   const { uid, question, interpretation, unsaidLine } = params;
+  const limitPerDay = params.limitPerDay ?? 3;
+
 
   const now = FieldValue.serverTimestamp();
+  const today = utcYmd(new Date());
+
+  const userRef = db.collection("users").doc(uid);
 
   const readingRef = db.collection("readings").doc(); // Firestore docId는 자동
   const summaryRef = db.collection("reading_summaries").doc(readingRef.id);
@@ -101,10 +109,46 @@ export async function createReading(params: {
     deleted_at: null,
   };
 
+  let usedAfter = 0;
 
   await db.runTransaction(async (tx) => {
+        // ✅ quota: reads first
+        const userSnap = await tx.get(userRef);
+
+        if (!userSnap.exists) {
+          // ✅ 너가 원한 정책: 유저 없으면 그냥 에러
+          throw Object.assign(new Error("User not found"), { status: 404 });
+        }
+    
+        const u = userSnap.data() || {};
+
+        const lastDate = typeof u.last_question_date === "string" ? u.last_question_date : null;
+        const prevCount = typeof u.daily_question_count === "number" ? u.daily_question_count : 0;
+
+        const currentCount = lastDate === today ? prevCount : 0;
+    
+        if (currentCount >= limitPerDay) {
+          throw Object.assign(new Error("Daily limit reached"), {
+            status: 429,
+            code: "DAILY_QUOTA_EXCEEDED",
+            meta: { limit: limitPerDay, used: currentCount, day: today },
+          });
+        }
+    
+    usedAfter = currentCount + 1;
+    
     tx.set(readingRef, fullPayload);
     tx.set(summaryRef, summaryPayload);
+    
+    tx.update(
+      userRef,
+      {
+        daily_question_count: usedAfter,
+        last_question_date: today,
+        updated_at: now,
+      },
+     
+    );
   });
 
   // timestamps resolve를 위해 read-back
@@ -121,7 +165,14 @@ export async function createReading(params: {
     unsaid_line: data.unsaid_line,
     status: data.status ?? "active",
     deleted_at: data.deleted_at ? tsToIso(data.deleted_at) : null,
+    quota: {
+      day: today,
+      used: usedAfter,
+      limit: limitPerDay,
+      remaining: Math.max(0, limitPerDay - usedAfter),
+    },
   };
+  
 }
 
 export async function listReadings(

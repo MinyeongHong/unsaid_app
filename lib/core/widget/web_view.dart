@@ -74,7 +74,7 @@ class _WebViewPageState extends State<WebViewPage> {
 
       WebViewCookieManager().setCookie(webViewCookie);
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     }
   }
 

@@ -30,6 +30,7 @@ class _UserSettingPageState extends State<UserSettingPage> {
               analyticsLogEvent('user_setting_click_personal');
 
               addRoute(
+                context: context,
                 page: UserPage(),
               );
             },
@@ -40,6 +41,7 @@ class _UserSettingPageState extends State<UserSettingPage> {
               analyticsLogEvent('user_setting_click_notification');
 
               addRoute(
+                context: context,
                 page: ReadingListPage(),
               );
             },
@@ -52,6 +54,7 @@ class _UserSettingPageState extends State<UserSettingPage> {
               analyticsLogEvent('user_setting_click_notification');
 
               addRoute(
+                context: context,
                 page: UserSettingNotificationPage(),
               );
             },
@@ -62,6 +65,7 @@ class _UserSettingPageState extends State<UserSettingPage> {
               analyticsLogEvent('user_setting_click_service');
 
               addRoute(
+                context: context,
                 page: WebViewPage(
                   title: 'Terms of Service',
                   url: serviceTermsUrl,
@@ -75,6 +79,7 @@ class _UserSettingPageState extends State<UserSettingPage> {
               analyticsLogEvent('user_setting_click_service');
 
               addRoute(
+                context: context,
                 page: WebViewPage(
                   title: 'Privacy Policy',
                   url: privacyTermsUrl,

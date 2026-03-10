@@ -18,6 +18,7 @@ import 'package:unsaid_app/core/user/bloc/user_bloc.dart';
 import 'package:unsaid_app/core/util/analytics.dart';
 import 'package:unsaid_app/core/util/config.dart';
 import 'package:unsaid_app/core/util/env.dart';
+import 'package:unsaid_app/core/util/firebase.dart';
 import 'package:unsaid_app/core/util/log.dart';
 
 void main() async {

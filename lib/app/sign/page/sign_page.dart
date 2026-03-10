@@ -75,14 +75,24 @@ class _SignPageState extends State<SignPage> {
       BlocProvider.of<AuthBloc>(context).add(AuthEvent.signIn());
 
       if (!user.isAgreed) {
-        addRoute(page: SignAgreePage(hasAppBar: false));
+        addRoute(
+          context: context,
+          page: SignAgreePage(
+            hasAppBar: false,
+          ),
+        );
       } else if (!user.isBirthCompleted) {
-        addRoute(page: SignBirthPage());
+        addRoute(
+          context: context,
+          page: SignBirthPage(),
+        );
       } else {
-        resetRoute(page: HomePage());
+        resetRoute(
+          page: HomePage(),
+        );
       }
     } on FirebaseException catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } catch (e) {
       if (e is Failure) {
         final msg = e.error.toString().toLowerCase();
@@ -90,7 +100,7 @@ class _SignPageState extends State<SignPage> {
         if (msg.contains('cancel')) return;
       }
 
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {

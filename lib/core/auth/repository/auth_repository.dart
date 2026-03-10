@@ -32,8 +32,6 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn.instance;
 
-      await googleSignIn.disconnect();
-
       await googleSignIn.initialize();
 
       if (!googleSignIn.supportsAuthenticate()) {

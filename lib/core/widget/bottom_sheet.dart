@@ -131,7 +131,7 @@ class BottomSheetButton extends StatelessWidget {
             },
             title: 'Cancel',
             width: (screenWidth - 72) / 2,
-            color: CustomColor.gray080,
+            color: CustomColor.gray020,
             titleColor: CustomColor.gray060,
             fontWeight: FontWeight.w500,
           ),

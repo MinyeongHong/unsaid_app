@@ -54,7 +54,7 @@ class _UserSettingNotificationPageState extends State<UserSettingNotificationPag
         );
       }
 
-      errorToast(e);
+      errorToast(context, e);
     }
   }
 

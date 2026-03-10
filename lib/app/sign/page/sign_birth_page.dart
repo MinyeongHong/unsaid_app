@@ -80,10 +80,11 @@ class _SignBirthPageState extends State<SignBirthPage> {
       );
 
       addRoute(
+        context: context,
         page: SignSuccessPage(),
       );
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {
@@ -113,10 +114,11 @@ class _SignBirthPageState extends State<SignBirthPage> {
       );
 
       addRoute(
+        context: context,
         page: SignSuccessPage(),
       );
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {

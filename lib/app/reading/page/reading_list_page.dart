@@ -33,13 +33,14 @@ class _ReadingListPageState extends State<ReadingListPage> {
 
       addRoute(
         fullscreenDialog: true,
+        context: context,
         page: ReadingDetailPage(
           hasDelete: true,
           reading: reading,
         ),
       );
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {

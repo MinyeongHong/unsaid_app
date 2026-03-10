@@ -70,7 +70,7 @@ class _UserEditPageState extends State<UserEditPage> {
 
       successToast('Successfully changed');
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {

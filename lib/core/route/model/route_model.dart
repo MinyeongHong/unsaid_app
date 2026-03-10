@@ -98,6 +98,7 @@ class PageData {
 
 void addRoute({
   bool fullscreenDialog = false,
+  required BuildContext context,
   required Widget page,
 }) {
   final PageData pageData = PageData(
@@ -140,7 +141,7 @@ class NoAnimationPage extends Page<dynamic> {
 
   @override
   Route<dynamic> createRoute(BuildContext context) => PageRouteBuilder<dynamic>(
-        settings: this,
-        pageBuilder: (_, __, ___) => child,
-      );
+    settings: this,
+    pageBuilder: (_, __, ___) => child,
+  );
 }

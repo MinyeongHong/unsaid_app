@@ -80,7 +80,6 @@
 		E6543906EE6F312C5BAA55A7 /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F15F1DDA40B4312C3B33707A /* Pods-RunnerTests.profile-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile-prod.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile-prod.xcconfig"; sourceTree = "<group>"; };
 		F5DCFFAA3B021710118DF2AE /* Pods-RunnerTests.debug-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug-prod.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug-prod.xcconfig"; sourceTree = "<group>"; };
-		FD09E467CA627DF86E9F5653 /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,7 +178,6 @@
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				7D52B2D8166E6D7F2B9DE0EE /* Pods */,
 				C3361FEF7BF342011F08166C /* Frameworks */,
-				FD09E467CA627DF86E9F5653 /* GoogleService-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -250,6 +248,7 @@
 				392880ED2F2C51C3006E0D22 /* Copy GoogleServices-Info.plist to the correct location */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
+				394C446F2F4609CF002B030A /* ShellScript */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
@@ -384,7 +383,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PLIST_DESTINATION=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n\nif [[ \"${CONFIGURATION}\" == *\"prod\"* ]]; then\nPLIST_SOURCE=\"${PROJECT_DIR}/Runner/Config/prod/GoogleService-Info.plist\"\n\ncp ${PLIST_SOURCE} ${PLIST_DESTINATION}\necho \"Production plist copied\"\nelif [[ \"${CONFIGURATION}\" == *\"dev\"* ]]; then\nPLIST_SOURCE=\"${PROJECT_DIR}/Runner/Config/dev/GoogleService-Info.plist\"\n\ncp ${PLIST_SOURCE} ${PLIST_DESTINATION}\necho \"Development plist copied\"\nfi\n\n";
+			shellScript = "set -e\n\necho \"APP_FLAVOR=${APP_FLAVOR}\"\nPLIST_DESTINATION=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\"\n\nif [[ \"${APP_FLAVOR}\" == \"prod\" ]]; then\n  PLIST_SOURCE=\"${PROJECT_DIR}/Runner/Config/prod/GoogleService-Info.plist\"\nelif [[ \"${APP_FLAVOR}\" == \"dev\" ]]; then\n  PLIST_SOURCE=\"${PROJECT_DIR}/Runner/Config/dev/GoogleService-Info.plist\"\nelse\n  echo \"❌ APP_FLAVOR must be dev or prod (current: ${APP_FLAVOR})\"\n  exit 1\nfi\n\necho \"✅ Copying ${PLIST_SOURCE} -> ${PLIST_DESTINATION}\"\ncp \"${PLIST_SOURCE}\" \"${PLIST_DESTINATION}\"\n";
+		};
+		394C446F2F4609CF002B030A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n\n";
 		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -400,7 +416,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
 		};
 		3BFEED95954E5915D8015DD5 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -592,7 +608,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.young.unsaidApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oyoung.unsaid.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -728,7 +744,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.young.unsaidApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oyoung.unsaid.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -830,7 +846,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.young.unsaidApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oyoung.unsaid.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -927,7 +943,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.young.unsaidApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oyoung.unsaid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1083,7 +1099,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.young.unsaidApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oyoung.unsaid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1113,7 +1129,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.young.unsaidApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oyoung.unsaid;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

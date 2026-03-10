@@ -29,8 +29,8 @@ class CustomButton extends StatelessWidget {
     required this.title,
     this.fontWeight = FontWeight.w700,
     this.fontSize = 18,
-    this.color = CustomColor.gray090,
-    this.titleColor = CustomColor.gray000,
+    this.color = CustomColor.primary,
+    this.titleColor = Colors.white,
     this.isActive = true,
     this.isActiveTap = true,
     this.isLoading = false,
@@ -44,7 +44,7 @@ class CustomButton extends StatelessWidget {
       width: width ?? screenWidth,
       height: height,
       decoration: BoxDecoration(
-        color: isActive ? color : CustomColor.gray050,
+        color: isActive ? color : CustomColor.gray020,
         borderRadius: borderRadius ?? BorderRadius.circular(60),
       ),
       child: CustomInkWell(
@@ -61,7 +61,7 @@ class CustomButton extends StatelessWidget {
                   title: title,
                   fontWeight: fontWeight,
                   fontSize: fontSize,
-                  color: isActive ? titleColor : CustomColor.primary,
+                  color: isActive ? titleColor : CustomColor.gray030,
                   height: 1.2,
                   textAlign: TextAlign.center,
                 ),
@@ -228,7 +228,6 @@ class _FadeButtonState extends State<FadeButton> with SingleTickerProviderStateM
 
 class BottomButton extends StatelessWidget {
   final void Function() onTap;
-
   final String title;
   final Color color;
   final Color titleColor;
@@ -240,7 +239,7 @@ class BottomButton extends StatelessWidget {
     Key? key,
     required this.onTap,
     required this.title,
-    this.color = CustomColor.gray090,
+    this.color = CustomColor.primary,
     this.titleColor = Colors.white,
     this.isActive = true,
     this.isLoading = false,

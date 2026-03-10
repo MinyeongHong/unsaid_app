@@ -71,13 +71,29 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 }
 
 class CustomNavigator {
-  static late GlobalKey<NavigatorState> key;
-  static BuildContext context = key.currentContext!;
+  static final GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
+
+  static BuildContext get context {
+    final context = key.currentContext;
+    if (context == null) {
+      throw FlutterError('CustomNavigator.context is null.');
+    }
+    return context;
+  }
+
+  static NavigatorState get navigator {
+    final navigator = key.currentState;
+    if (navigator == null) {
+      throw FlutterError('CustomNavigator.navigator is null.');
+    }
+    return navigator;
+  }
 }
 
 class CustomRouterDelegate extends RouterDelegate<Object>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  @override
+  GlobalKey<NavigatorState> get navigatorKey => CustomNavigator.key;
 
   bool onPopPage({
     required Route<dynamic> route,
@@ -100,9 +116,7 @@ class CustomRouterDelegate extends RouterDelegate<Object>
   @override
   Widget build(BuildContext context) {
     return CustomAuthBloc(
-      listenerOrElse: () {
-        CustomNavigator.key = navigatorKey;
-      },
+      listenerOrElse: () {},
       orElse: () {
         return CustomRouteBloc(
           onPopPage: (Route<dynamic> route, dynamic result) {

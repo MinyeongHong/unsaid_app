@@ -37,13 +37,13 @@ class _UserPageState extends State<UserPage> {
 
       await UserBloc.deleteUser();
 
+      // successToast('Successfully deleted my account.');
+
       BlocProvider.of<AuthBloc>(context).add(
         AuthEvent.signOut(),
       );
-
-      successToast('Successfully deleted my account.');
     } catch (e) {
-      errorToast(e);
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {
@@ -102,6 +102,7 @@ class _UserPageState extends State<UserPage> {
               analyticsLogEvent('user_setting_click_notification');
 
               addRoute(
+                context: context,
                 page: UserEditPage(),
               );
             },
