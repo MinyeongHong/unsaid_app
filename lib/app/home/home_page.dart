@@ -99,11 +99,9 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           _remaining = 0;
         });
-
-        errorToast(context, 'Today’s limit reached. Try again tomorrow.');
-      } else {
-        errorToast(context, e);
       }
+
+      errorToast(context, e);
     } finally {
       if (mounted) {
         setState(() {
@@ -196,11 +194,11 @@ class _HomePageState extends State<HomePage> {
                             FadeInDownAnimationCard(
                               child: Column(
                                 children: [
-                                  BoldText(
+                                  MediumText(
                                     margin: EdgeInsets.only(top: 24),
                                     title: 'Ask what you already suspect',
-                                    fontSize: 18,
-                                    color: CustomColor.gray080,
+                                    fontSize: 20,
+                                    color: CustomColor.gray090,
                                     textAlign: TextAlign.center,
                                   ),
                                   Container(
@@ -214,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                                           autofocus: true,
                                           maxLines: null, // multiline
                                           minLines: 2,
-                                          maxLength: 150,
+                                          maxLength: 200,
                                           keyboardType: TextInputType.multiline,
                                           textInputAction: TextInputAction.newline,
                                           textAlign: TextAlign.center,
@@ -241,9 +239,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                             )
                           else
-                            BoldText(
+                            NormalText(
                               title: 'Did you think this through?',
-                              fontSize: 18,
+                              fontSize: 20,
                               color: CustomColor.gray080,
                               textAlign: TextAlign.center,
                             ),
@@ -277,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                                       _questionFocusNode.requestFocus();
                                     });
                                   },
-                                  margin: EdgeInsets.only(top: 24, left: 78, right: 78),
+                                  margin: EdgeInsets.only(top: 32, left: 78, right: 78),
                                   color: CustomColor.gray090,
                                   borderRadius: BorderRadius.circular(60),
                                   title: 'Ask Anyway',
@@ -295,7 +293,7 @@ class _HomePageState extends State<HomePage> {
                       margin: EdgeInsets.only(top: 40),
                       title: 'This isn’t about the future',
                       fontSize: 14,
-                      color: CustomColor.gray040,
+                      color: CustomColor.gray060,
                       textAlign: TextAlign.center,
                     ),
                   )

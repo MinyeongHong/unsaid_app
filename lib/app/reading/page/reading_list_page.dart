@@ -5,8 +5,10 @@ import 'package:unsaid_app/app/reading/page/reading_detail_page.dart';
 import 'package:unsaid_app/app/reading/widget/reading_list_widget.dart';
 import 'package:unsaid_app/core/route/model/route_model.dart';
 import 'package:unsaid_app/core/util/analytics.dart';
+import 'package:unsaid_app/core/util/color.dart';
 import 'package:unsaid_app/core/widget/body.dart';
 import 'package:unsaid_app/core/widget/scaffold.dart';
+import 'package:unsaid_app/core/widget/text.dart';
 import 'package:unsaid_app/core/widget/toast.dart';
 
 class ReadingListPage extends StatefulWidget {
@@ -60,7 +62,24 @@ class _ReadingListPageState extends State<ReadingListPage> {
           CustomReadingBloc(
             success: (List<Reading> readings) {
               if (readings.isEmpty) {
-                return ReadingListEmptyCard();
+                return Column(
+                  children: [
+                    NormalText(
+                      margin: EdgeInsets.only(top: 48, left: 24, right: 24),
+                      title: 'You haven’t asked.',
+                      fontSize: 20,
+                      color: CustomColor.gray070,
+                      textAlign: TextAlign.center,
+                    ),
+                    NormalText(
+                      margin: EdgeInsets.only(top: 8),
+                      title: 'Take your time.',
+                      fontSize: 14,
+                      color: CustomColor.gray050,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                );
               } else {
                 return Container(
                   margin: EdgeInsets.only(top: 12),
