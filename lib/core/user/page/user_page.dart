@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:unsaid_app/app/user_setting/widget/user_setting_widget.dart';
+import 'package:unsaid_app/app/zodiac/page/zodiac_page.dart';
 import 'package:unsaid_app/core/auth/bloc/auth_bloc.dart';
 import 'package:unsaid_app/core/route/model/route_model.dart';
 import 'package:unsaid_app/core/user/bloc/user_bloc.dart';
@@ -79,7 +80,7 @@ class _UserPageState extends State<UserPage> {
           ),
           BoldText(
             margin: EdgeInsets.only(top: 12, left: 24, right: 24),
-            title: 'Birth',
+            title: 'Sign',
             fontSize: 16,
             color: CustomColor.gray070,
           ),
@@ -88,7 +89,7 @@ class _UserPageState extends State<UserPage> {
             success: (User user) {
               return MediumText(
                 margin: EdgeInsets.only(top: 4, left: 24, right: 24),
-                title: user.birth != null ? DateFormat('MMM d, y').format(user.birth!) : 'No data',
+                title: user.sunSign != null ? user.sunSign! : '-',
                 fontSize: 14,
                 color: CustomColor.gray050,
               );
@@ -103,10 +104,12 @@ class _UserPageState extends State<UserPage> {
 
               addRoute(
                 context: context,
-                page: UserEditPage(),
+                page: ZodiacPage(
+                  isEdit: true,
+                ),
               );
             },
-            title: 'Edit Birth',
+            title: 'Edit Sunsign',
           ),
           UserSettingCard(
             onTap: () {

@@ -60,6 +60,7 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/icons/zodiac/
     - assets/images/
     - assets/lotties/
     - .env

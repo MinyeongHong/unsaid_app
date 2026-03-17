@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dartz/dartz.dart';
+import 'package:unsaid_app/app/zodiac/model/zodiac_model.dart';
 import 'package:unsaid_app/core/user/model/user_model.dart';
 import 'package:unsaid_app/core/util/failure.dart';
 import 'package:unsaid_app/core/util/fetch.dart';
@@ -8,6 +9,7 @@ abstract class UserRepository {
   Future<Either<Failure, User>> getUser();
   Future<Either<Failure, User>> addUser(UserAdd userAdd);
   Future<Either<Failure, User>> updateUser(DateTime? birth);
+  Future<Either<Failure, User>> updateUserZodiac(ZodiacAdd zodiacAdd);
   Future<Either<Failure, void>> deleteUser();
 }
 
@@ -53,6 +55,27 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
+  Future<Either<Failure, User>> updateUserZodiac(ZodiacAdd zodiacAdd) async {
+    try {
+      final dynamic data = await fetchData(
+        method: 'put',
+        path: 'users/zodiac',
+        body: {
+          'sun_sign': zodiacAdd.name,
+          'shadow_id': zodiacAdd.shadowId,
+          'is_birth_completed': true,
+        },
+      );
+
+      final User user = User.fromJson(data);
+
+      return Right(user);
+    } catch (e) {
+      return Left(Failure('updateUserZodiac', e));
+    }
+  }
+
+  @override
   Future<Either<Failure, User>> updateUser(DateTime? birth) async {
     try {
       String? birthString;
@@ -70,7 +93,7 @@ class UserRepositoryImpl implements UserRepository {
         path: 'users',
         body: {
           'birth': birthString,
-          'is_birth_complete': true,
+          'is_birth_completed': true,
         },
       );
 

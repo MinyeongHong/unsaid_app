@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:unsaid_app/app/sign/page/sign_birth_page.dart';
 import 'package:unsaid_app/app/sign/widget/sign_agree_widget.dart';
 import 'package:unsaid_app/app/user_agreement/user_agreement_repository.dart';
+import 'package:unsaid_app/app/zodiac/page/zodiac_page.dart';
 import 'package:unsaid_app/core/route/model/route_model.dart';
 import 'package:unsaid_app/core/util/analytics.dart';
 import 'package:unsaid_app/core/util/color.dart';
@@ -54,7 +54,7 @@ class _SignAgreePageState extends State<SignAgreePage> {
 
       addRoute(
         context: context,
-        page: SignBirthPage(),
+        page: ZodiacPage(),
       );
     } catch (e) {
       errorToast(context, e);

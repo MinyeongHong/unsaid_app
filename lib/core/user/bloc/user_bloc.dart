@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:unsaid_app/app/zodiac/model/zodiac_model.dart';
 import 'package:unsaid_app/core/user/model/user_model.dart';
 import 'package:unsaid_app/core/user/repository/user_repository.dart';
 import 'package:unsaid_app/core/util/common.dart';
@@ -77,6 +78,15 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   static Future<User> addUser(UserAdd userAdd) async {
     final either = await _userRepository.addUser(userAdd);
+
+    return either.fold(
+      (l) => throw l,
+      (r) => r,
+    );
+  }
+
+  static Future<User> updateUserZodiac(ZodiacAdd zodiacAdd) async {
+    final either = await _userRepository.updateUserZodiac(zodiacAdd);
 
     return either.fold(
       (l) => throw l,

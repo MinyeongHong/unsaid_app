@@ -16,6 +16,7 @@ abstract class User with _$User {
     @JsonKey(name: 'provider') String provider,
     @JsonKey(name: 'email') String email,
     @JsonKey(name: 'sun_sign') String? sunSign,
+    @JsonKey(name: 'shadow_id') String? shadowId,
     @JsonKey(name: 'daily_question_count') int dailyQuestionCount,
     @JsonKey(name: 'is_agreed') bool isAgreed,
     @JsonKey(name: 'is_birth_completed') bool isBirthCompleted,

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:unsaid_app/app/home/home_page.dart';
 import 'package:unsaid_app/app/sign/page/sign_agree_page.dart';
-import 'package:unsaid_app/app/sign/page/sign_birth_page.dart';
 import 'package:unsaid_app/app/sign/widget/sign_widget.dart';
+import 'package:unsaid_app/app/zodiac/page/zodiac_page.dart';
 import 'package:unsaid_app/core/app_state/bloc/app_state_bloc.dart';
 import 'package:unsaid_app/core/auth/bloc/auth_bloc.dart';
 import 'package:unsaid_app/core/route/model/route_model.dart';
@@ -84,7 +84,7 @@ class _SignPageState extends State<SignPage> {
       } else if (!user.isBirthCompleted) {
         addRoute(
           context: context,
-          page: SignBirthPage(),
+          page: ZodiacPage(),
         );
       } else {
         resetRoute(

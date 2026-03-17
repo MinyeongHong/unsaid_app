@@ -5,8 +5,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:unsaid_app/app.dart';
 import 'package:unsaid_app/app/home/home_page.dart';
 import 'package:unsaid_app/app/sign/page/sign_agree_page.dart';
-import 'package:unsaid_app/app/sign/page/sign_birth_page.dart';
 import 'package:unsaid_app/app/sign/page/sign_page.dart';
+import 'package:unsaid_app/app/zodiac/page/zodiac_page.dart';
 import 'package:unsaid_app/core/auth/bloc/auth_bloc.dart';
 import 'package:unsaid_app/core/route/model/route_model.dart';
 import 'package:unsaid_app/core/user/bloc/user_bloc.dart';
@@ -51,7 +51,7 @@ class RouteBloc extends Bloc<RouteEvent, RouteState> {
           );
         } else if (!user.isBirthCompleted) {
           pageData = PageData(
-            page: SignBirthPage(
+            page: ZodiacPage(
               hasAppBar: false,
             ),
           );
