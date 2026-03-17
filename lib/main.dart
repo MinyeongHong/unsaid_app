@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:unsaid_app/app.dart';
 import 'package:unsaid_app/app/reading/bloc/reading_bloc.dart';
 import 'package:unsaid_app/app/user_setting/bloc/user_setting_bloc.dart';
+import 'package:unsaid_app/app/zodiac/bloc/zodiac_bloc.dart';
 import 'package:unsaid_app/core/app_lifecycle/app_lifecycle_bloc.dart';
 import 'package:unsaid_app/core/app_state/bloc/app_state_bloc.dart';
 import 'package:unsaid_app/core/auth/bloc/auth_bloc.dart';
@@ -54,6 +55,9 @@ void main() async {
         ),
         BlocProvider<ReadingBloc>(
           create: (_) => ReadingBloc()..add(ReadingEvent.fetch()),
+        ),
+        BlocProvider<ZodiacBloc>(
+          create: (_) => ZodiacBloc()..add(ZodiacEvent.fetch()),
         ),
       ],
       child: App(),

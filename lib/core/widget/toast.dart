@@ -92,7 +92,11 @@ void successToast(String title) {
 }
 
 void errorToast(BuildContext context, Object error) {
-  String errorMessage = '서버 오류가 발생했어요.\n잠시 후 다시 시도해 주세요.';
+  String errorMessage = 'Something went wrong. Please try again later.';
+
+  if (error is Failure && error.message == 'quota_exceeded') {
+    errorMessage = 'Today’s limit reached. Try again tomorrow.';
+  }
 
   try {
     final dynamic errorToJson = jsonDecode(jsonEncode((error as Failure).error));

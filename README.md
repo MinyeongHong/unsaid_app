@@ -363,7 +363,7 @@ Full-stack Flutter + Firebase AI-integrated application designed and implemented
 
 This project uses publicly available free assets:
 
-- Icons: https://iconsvg.xyz/  
+- Icons: https://iconsvg.xyz/, https://www.streamlinehq.com/icons/core-remix-free
 - Animations: https://lottiefiles.com/
 
 All assets are used under their respective licenses.
