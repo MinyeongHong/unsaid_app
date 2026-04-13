@@ -1,6 +1,7 @@
 import { auth, db, FieldValue} from "../config/firebase";
 import { isValidDateYmd } from "../utils/date";
 import { serializeUser } from "../utils/serialize";
+import { SHADOW_TRAITS_MAP } from "../utils/zodiac";
 
 export async function getUser(uid: string) {
   const userRef = db.collection("users").doc(uid);
@@ -103,6 +104,46 @@ export async function upsertUserOnLogin(decodedUser: any, body: any = {}) {
   return out; 
 }
 
+export async function updateUserZodiac(uid: string, body: any) {
+  const ref = db.collection("users").doc(uid);
+
+  const snap = await ref.get();
+  if (!snap.exists) {
+    throw Object.assign(new Error("User not found."), { status: 404 });
+  }
+
+  // 필수 필드 검증
+  const { sun_sign, shadow_id, is_birth_completed } = body;
+
+  if (!sun_sign || !shadow_id) {
+    throw Object.assign(new Error("sun_sign and shadow_id are required"), {
+      status: 400,
+    });
+  }
+
+  if (is_birth_completed !== true) {
+    throw Object.assign(new Error("is_birth_completed must be true to finish onboarding"), {
+      status: 400,
+    });
+  }
+
+  // DB 업데이트
+  await ref.set(
+    {
+      sun_sign,           
+      shadow_id,         
+      is_birth_completed, 
+      updated_at: FieldValue.serverTimestamp(),
+    },
+    { merge: true }
+  );
+
+  const saved = await ref.get();
+  const after = saved.data() || {};
+
+  return serializeUser(after);
+}
+
 
 export async function updateUser(uid: string, body: any) {
   const ref = db.collection("users").doc(uid);
@@ -117,8 +158,8 @@ export async function updateUser(uid: string, body: any) {
 
   // ✅ 이번 엔드포인트는 birth 흐름만 처리한다는 전제
   // (나중에 users PUT을 확장할 거면 patch builder만 확장하면 됨)
-  if (body?.is_birth_complete !== true) {
-    throw Object.assign(new Error("is_birth_complete must be true"), {
+  if (body?.is_birth_completed !== true) {
+    throw Object.assign(new Error("is_birth_completed must be true"), {
       status: 400,
     });
   }
@@ -207,6 +248,27 @@ export async function deleteUser(uid: string) {
     // 실무에서는 여기 로그만 남김 (재시도/배치로 정리)
     console.error("Failed to delete auth user:", uid, e);
   }
+}
+
+export async function getUserZodiac(uid: string) {
+  const doc = await db.collection("users").doc(uid).get();
+
+  if (!doc.exists) return null;
+
+  const data = doc.data() as any;
+
+  const sunSign = data?.sun_sign; 
+  const shadowId = data?.shadow_id;
+
+  if (!sunSign || !shadowId) return null;
+
+  const shadowTrait = SHADOW_TRAITS_MAP[shadowId] || "";
+
+  return {
+    sunSign,
+    shadowId,
+    shadowTrait
+  };
 }
 
 export async function getUserBirth(uid: string): Promise<string | null> {

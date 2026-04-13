@@ -62,6 +62,7 @@ ios/Runner/Config/prod/GoogleService-Info.plist
 
 # Firebase Functions
 functions/lib/
+functions/prompts/readings.txt
 functions/node_modules/
 functions/.env
 functions/.env.*

@@ -1,6 +1,6 @@
 import * as express from "express";
 import { requireAuth } from "../middlewares/requireAuth";
-import { deleteUser, getUser, updateUser, upsertUserOnLogin } from "../services/users.service";
+import { deleteUser, getUser, updateUser, updateUserZodiac, upsertUserOnLogin } from "../services/users.service";
 
 export const usersRouter = express.Router();
 
@@ -17,10 +17,18 @@ usersRouter.post("/users", requireAuth, async (req: any, res: any) => {
   return res.status(201).json({ data });
 });
 
+// TODO delete
 usersRouter.put("/users", requireAuth, async (req: any, res: any) => {
   const uid = req.user.uid;
 
   const data = await updateUser(uid, req.body ?? {});
+
+  return res.status(200).json({ data });
+});
+
+usersRouter.put("/users/zodiac", requireAuth, async (req: any, res: any) => {
+  const uid = req.user.uid;
+  const data = await updateUserZodiac(uid, req.body ?? {});
 
   return res.status(200).json({ data });
 });

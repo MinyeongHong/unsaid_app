@@ -1,3 +1,31 @@
+// TODO fix
+export const SHADOW_TRAITS_MAP: Record<string, string> = {
+  "aries_1": "Aggression used to hide a deep fear of being weak.",
+  "aries_2": "Winning just to prove you have a right to exist.",
+  "taurus_1": "Staying in toxic spots just for financial safety.",
+  "taurus_2": "Stubbornness as a shield against a scary world.",
+  "gemini_1": "Using wit to avoid any real emotional depth.",
+  "gemini_2": "Acting 'light' to escape heavy, ugly truths.",
+  "cancer_1": "Using 'caretaking' to control everyone around you.",
+  "cancer_2": "Playing the victim to avoid real responsibility.",
+  "leo_1": "A fragile ego that demands constant attention.",
+  "leo_2": "Creating drama just to avoid being ordinary.",
+  "virgo_1": "Judging others to distract from your own self-hate.",
+  "virgo_2": "Micromanaging because your internal life is a chaos.",
+  "libra_1": "Being 'nice' just to avoid standing up for yourself.",
+  "libra_2": "Indecisiveness used to dodge any responsibility.",
+  "scorpio_1": "Using power plays to protect a wounded core.",
+  "scorpio_2": "Testing people constantly to see when they'll leave.",
+  "sagittarius_1": "Calling it 'freedom' when it's actually just running away.",
+  "sagittarius_2": "Self-righteousness used to hide your own insecurity.",
+  "capricorn_1": "Treating people like business deals to stay safe.",
+  "capricorn_2": "Coldness as a mask for the fear of losing control.",
+  "aquarius_1": "Acting detached to avoid the vulnerability of belonging.",
+  "aquarius_2": "A superiority complex used to keep people far away.",
+  "pisces_1": "Using self-pity to get out of holding yourself accountable.",
+  "pisces_2": "Willful ignorance to keep your comfort zone intact."
+};
+
 export function getSunSignFromYmd(birthYmd: string): string | null {
     // birthYmd: "YYYY-MM-DD"
     const m = Number(birthYmd.slice(5, 7));

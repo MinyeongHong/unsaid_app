@@ -78,36 +78,3 @@ class ReadingListCard extends StatelessWidget {
     );
   }
 }
-
-class ReadingListEmptyCard extends StatelessWidget {
-  const ReadingListEmptyCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomSvgAsset(
-          margin: EdgeInsets.only(top: 32),
-          name: 'icons/file',
-          width: 50,
-          height: 50,
-          color: CustomColor.gray020,
-        ),
-        MediumText(
-          margin: EdgeInsets.only(top: 24),
-          title: 'You haven’t asked a question yet',
-          fontSize: 16,
-          color: CustomColor.gray050,
-          textAlign: TextAlign.center,
-        ),
-        NormalText(
-          margin: EdgeInsets.only(top: 4),
-          title: 'Take your time',
-          fontSize: 14,
-          color: CustomColor.gray050,
-          textAlign: TextAlign.center,
-        ),
-      ],
-    );
-  }
-}
