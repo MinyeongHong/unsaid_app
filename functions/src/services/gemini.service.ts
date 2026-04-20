@@ -33,9 +33,14 @@ function getModel(): string {
 }
 
 function getSystemPrompt(): string {
-  if (cachedSystemPrompt) return cachedSystemPrompt;
-
   const p = path.join(process.cwd(), "prompts", "readings.txt");
+  const isEmulator = process.env.FUNCTIONS_EMULATOR === "true";
+
+  if (isEmulator) {
+    return fs.readFileSync(p, "utf8");
+  }
+
+  if (cachedSystemPrompt) return cachedSystemPrompt;
   cachedSystemPrompt = fs.readFileSync(p, "utf8");
   return cachedSystemPrompt;
 }

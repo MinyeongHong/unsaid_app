@@ -71,11 +71,11 @@ export async function createReading(params: {
   question: string;
   interpretation: string;
   unsaidLine: string;
-  limitPerDay?: number;
 
 }) {
   const { uid, question, interpretation, unsaidLine } = params;
-  const limitPerDay = params.limitPerDay ?? 3;
+  const isDev = process.env.FUNCTIONS_EMULATOR === "true";
+  const limitPerDay = isDev ? 100 : 3;
 
 
   const now = FieldValue.serverTimestamp();
@@ -112,11 +112,9 @@ export async function createReading(params: {
   let usedAfter = 0;
 
   await db.runTransaction(async (tx) => {
-        // ✅ quota: reads first
         const userSnap = await tx.get(userRef);
 
         if (!userSnap.exists) {
-          // ✅ 너가 원한 정책: 유저 없으면 그냥 에러
           throw Object.assign(new Error("User not found"), { status: 404 });
         }
     
@@ -221,7 +219,6 @@ export async function getReadingById(uid: string, id: string) {
 
   const data = doc.data() as any;
 
-  // ✅ 보안: uid 소유권 체크
   if (data.uid !== uid) {
     throw Object.assign(new Error("Forbidden"), { status: 403 });
   }
